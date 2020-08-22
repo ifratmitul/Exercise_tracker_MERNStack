@@ -6,6 +6,8 @@ import CreateExercise from './Component/create-exercise';
 import CreateUser from './Component/create-user';
 import EditExercise from './Component/edit-exercise';
 import ExerciseList from './Component/Exercises-list';
+import './App.css'
+
 function App() {
   return (
     <Router>

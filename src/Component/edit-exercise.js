@@ -12,7 +12,7 @@ export default class EditExercise extends Component {
     this.onChangeDuration = this.onChangeDuration.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
+    this.textInput = React.createRef();
     this.state = {
       username: '',
       description: '',
@@ -52,7 +52,7 @@ export default class EditExercise extends Component {
 
   onChangeUsername(e) {
     this.setState({
-      username: e.target.value
+      username: this.textInput.current.value
     })
   }
 
@@ -99,7 +99,7 @@ export default class EditExercise extends Component {
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
           <label>Username: </label>
-          <select ref="userInput"
+          <select ref={this.textInput}
               required
               className="form-control"
               value={this.state.username}

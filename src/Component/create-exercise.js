@@ -14,18 +14,21 @@ export class CreateExercise extends Component {
             date : new Date(),
             users: []
         }
+        this.textInput = React.createRef();
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeDuration = this.onChangeDuration.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+
     
     }
 
     onChangeUsername(e) 
     {
         this.setState({
-          username: e.target.value
+          //username: e.target.value
+          username : this.textInput.current.value
         })
       
     }
@@ -65,17 +68,27 @@ export class CreateExercise extends Component {
         console.log(exercise);
     
         axios.post('http://localhost:5000/exercises/add', exercise)
-          .then(res => <p>{res.data}</p>);
+          .then(res => console.log(res.data));
     
         window.location = '/';
     }
 
     componentDidMount(){
-        this.setState({
-            users: ['test user'],
-            username : 'test user'
-        })
-        console.log(this.state)
+      axios.get('http://localhost:5000/users/')
+      .then(res => {
+        if (res.data.length > 0) {
+          this.setState({
+            users: res.data.map(user => user.username),
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })      
+    
+
+
+
     }
     
     render()
@@ -86,7 +99,7 @@ export class CreateExercise extends Component {
               <form onSubmit={this.onSubmit}>
                 <div className="form-group"> 
                   <label>Username: </label>
-                  <select ref="userInput"
+                  <select ref={this.textInput}
                       required
                       className="form-control"
                       value={this.state.username}
